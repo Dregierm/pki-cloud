@@ -5,19 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google</title>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 <body>
-    <p>Logged in <%= loggedUser %></p>
-    <img src="<%=picture%>" height="23" width="23">
-    <a href="#" onclick="signOut();">Sign out</a>
-<script>
-  function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
-  }
-</script>
+    <p>Logged in <%= loggedUser %> <img src="<%=picture%>" height="23" width="23"></p>
+    <a href="logut/google">Sign out</a>
 </body>
 </html>

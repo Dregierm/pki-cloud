@@ -58,5 +58,17 @@ app.get('/signin/google', function (req, res) {
     res.redirect(url);            
 });
 
+app.get('/logut/google', function (req, res) {
+    if(authed) {
+        var oauth2 = google.oauth2.getAuthInstance();
+        oauth2.signOut().then(function () {
+        console.log('User signed out.');
+        });
+        authed = false;
+    }
+    res.redirect('/');           
+});
+
+
 const port = process.env.port || 5000
 app.listen(port, () => console.log(`Server running at ${port}`));
