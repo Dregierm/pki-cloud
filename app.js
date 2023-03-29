@@ -1,5 +1,7 @@
+require('dotenv').config();
 const { google } = require('googleapis');
 const express = require('express')
+const axios = require('axios')
 const OAuth2Data = require('./google_key.json')
 
 const app = express()
@@ -48,6 +50,21 @@ app.get('/auth/google/callback', function (req, res) {
     }
 });
 
+app.get('/auth/github/callback', function (req, res) {
+const requestToken = req.query.code
+  
+axios({
+  method: 'post',
+  url: `https://github.com/login/oauth/access_token?client_id=${process.env.CLIENT_ID}&client_secret=${process.env.CLIENT_SECRET}&code=${requestToken}`,
+  headers: {
+       accept: 'application/json'
+  }
+}).then((response) => {
+  access_token = response.data.access_token
+  res.redirect('/success_git');
+})
+});
+
 app.get('/signin/google', function (req, res) {
     // Generate an OAuth URL and redirect there
     const url = oAuth2Client.generateAuthUrl({
@@ -58,9 +75,26 @@ app.get('/signin/google', function (req, res) {
     res.redirect(url);            
 });
 
+app.get('signin/github', function (req, res) {
+    res.render('githubLogin');
+});
+
+app.get('/success_git', function(req, res) {
+
+    axios({
+      method: 'get',
+      url: `https://api.github.com/user`,
+      headers: {
+        Authorization: 'token ' + access_token
+      }
+    }).then((response) => {
+      res.render('github',{ userData: response.data });
+    })
+});
+
 app.get('/logut/google', function (req, res) {
     if(authed) {
-        var auth2 = google.auth2.getAuthInstance();
+         var auth2 = google.auth2.getAuthInstance();
         auth2.signOut().then(function () {
         console.log('User signed out.');
         });
