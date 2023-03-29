@@ -75,7 +75,7 @@ app.get('/signin/google', function (req, res) {
     res.redirect(url);            
 });
 
-app.get('signin/github', function (req, res) {
+app.get('/signin/github', function (req, res) {
     res.render('githubLogin');
 });
 
