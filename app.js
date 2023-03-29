@@ -76,7 +76,7 @@ app.get('/signin/google', function (req, res) {
 });
 
 app.get('/signin/github', function (req, res) {
-    res.render('githubLogin');
+    res.render('githubLogin', {client_id: process.env.CLIENT_ID});
 });
 
 app.get('/success_git', function(req, res) {
