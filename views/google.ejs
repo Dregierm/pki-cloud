@@ -5,9 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google OAuth</title>
+    <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
 </head>
 <body>
     <p>Logged in <%= loggedUser %> <img src="<%=picture%>" height="23" width="23"></p>
-    <a href="logut/google">Sign out</a>
+    <button onclick="logout()">Sign out</button>
+
+    <script>
+        function logout() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+            });
+            auth2.disconnect();
+        }
+        location.replace( window.location.origin + "/logout/google")
+    </script>
 </body>
 </html>

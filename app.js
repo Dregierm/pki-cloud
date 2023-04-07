@@ -92,12 +92,8 @@ app.get('/success_git', function(req, res) {
     })
 });
 
-app.get('/logut/google', function (req, res) {
+app.get('/logout/google', function (req, res) {
     if(authed) {
-         var auth2 = google.auth2.getAuthInstance();
-        auth2.signOut().then(function () {
-        console.log('User signed out.');
-        });
         authed = false;
     }
     res.redirect('/');           
